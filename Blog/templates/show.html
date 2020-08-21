@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Show Blog Page</title>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+</head>
+
+<body>
+<header class="header">
+<nav class="navbar navbar-default" id="navbar">
+<div class="container">
+  <div class="collapse navbar-collapse" id="header-navbar">
+
+	<ul class="nav navbar-nav navbar-left">
+    <li><a data-cont="Shukai Blog" title="Shukai Blog" href="/">Main Page</a></li>
+	<li><a data-cont="List" title="List" href="/blog_list">Blog List Page</a></li>
+	<li><a data-cont="Personal CV" title="Personal CV" href="/cv/1">Personal CV</a></li>
+	</ul>
+
+	<ul class="nav navbar-nav navbar-right">
+	{% if user.is_active %}
+	<li><a data-cont="User" title="User" href="#">Welcome,{{user.username}}</a></li>
+	<li><a data-cont="Logout" title="Logout" href="/logout/">Log Out</a></li>
+	{% else %}
+	<li><a data-cont="Login" title="Login" href="/login/">Log In</a></li>
+	<li><a data-cont="Register" title="Register" href="/register/">Register</a></li>
+	{% endif %}
+	</ul>
+  </div>
+</div>
+</nav>
+</header>
+
+<div class="box">
+<section class="container">
+<div class="content-wrap">
+<div class="content show">
+  <header class="article-header">
+	<h1><a href="#" title="{{blog.title}}" >{{blog.title}}</a></h1>
+	      <span class="meta">
+		        <span class="muted">
+				<i class="time-png">
+					<img src="/static/images/time.png">
+				</i>{{blog.pub_date}}
+				</span>
+
+                <span class="muted">
+				<i class="author-png">
+					<img src="/static/images/author.png">
+				</i>{{blog.user}}
+				</span>
+
+				<span class="muted">
+				<i class="view-png">
+					<img src="/static/images/View.png">
+				</i>{{blog.views}}
+			    </span>
+
+				<span class="muted">
+				<i class="comment-png">
+					<img src="/static/images/comment.png">
+				</i>{{blog.comment_set.count}}
+			    </span>
+	    </span>
+  </header>
+	<div class="article_center">
+				<h5>{% autoescape off %} {{blog.content}} {% endautoescape %}</h5>
+				<h3>Comment</h3>
+	</div>
+
+  <div id="respond">
+		<form action="/comment/{{blog.id}}" method="POST">
+			<div class="comment">
+				<div class="comment-box">
+					<textarea placeholder="Your Comment(Required)" name="content" id="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
+					<div class="comment-ctrl">
+						
+						<button type="submit" name="comment-submit" id="comment-submit" tabindex="4">Comment</button>
+					</div>
+				</div>
+			</div>
+			{% csrf_token %}
+		</form>
+
+  </div>
+  <div id="postcomments">
+	<ol>
+		{% for comment in comment_list %}
+	<li class="comment-content">
+		<p class="comment-f">#{{forloop.counter}}</p>
+		<div class="comment-main">
+		<p class="over">
+
+		<span class="muted">
+			<i class="author-png">
+					<img src="/static/images/author.png">
+				</i><a class="address" href="#" rel="nofollow" target="_blank">{{comment.user.username}}</a>
+		</span>
+
+		<span class="muted">
+			<i class="time-png">
+					<img src="/static/images/time.png">
+				</i>{{comment.pub_date}}
+		</span>
+
+			<p>{{comment.content}}</p>
+		</p>
+	    </div>
+	</li>
+		{% endfor%}
+	</ol>
+  </div>
+
+</div>
+</div>
+
+<aside class="sidebar">
+
+<div class="widget widget_hot">
+	  <h3 style="border: 1px solid #ccc;">Newest Comment Blogs</h3>
+	  <ul class="u">
+
+		  {% for comment_blog in unique_newest_comment_blogs %}
+			<li>
+				<a title="{{comment_blog.post.title}}" href="/blog/{{comment_blog.post.id}}" >
+				<span class="thumbnail">
+				<img class="thumb" data-original="/{{comment_blog.post.cover}}" src="/{{comment_blog.post.cover}}" alt="{{comment_blog.post.title}}"  style="display: block;">
+			    </span>
+				<div class="text_right">
+					<p class="text">{{comment_blog.post.title}}</p>
+
+				<span class="muted">
+					<i class="time-png">
+						<img src="/static/images/time.png">
+					</i>{{comment_blog.post.pub_date}}
+				</span>
+
+				<span class="muted">
+					<i class="eye-open-png">
+						<img src="/static/images/View.png">
+					</i>{{comment_blog.post.views}}
+				</span>
+
+					<span class="muted">
+					<i class="comment-png">
+						<img src="/static/images/comment.png">
+					</i>{{comment_blog.post.comment_set.count}}
+					</span>
+
+				</div>
+				</a>
+			</li>
+		  {% endfor %}
+	  </ul>
+</div>
+
+</aside>
+
+</section>
+</div>
+
+
+
+</body>
+</html>

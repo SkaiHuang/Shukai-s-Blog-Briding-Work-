@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personal CV</title>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+</head>
+
+<body>
+<header class="header">
+<nav class="navbar navbar-default" id="navbar">
+<div class="container">
+  <div class="collapse navbar-collapse" id="header-navbar">
+
+	<ul class="nav navbar-nav navbar-left">
+    <li><a data-cont="Shukai Blog" title="Shukai Blog" href="/">Main Page</a></li>
+	<li><a data-cont="List" title="List" href="/blog_list">Blog List Page</a></li>
+	<li><a data-cont="Personal CV" title="Personal CV" href="#">Personal CV</a></li>
+	</ul>
+
+	<ul class="nav navbar-nav navbar-right">
+	{% if user.is_authenticated %}
+	<li><a data-cont="User" title="User" href="#">Welcome,{{user.username}}</a></li>
+	<li><a data-cont="Logout" title="Logout" href="/logout/">Log Out</a></li>
+	{% else %}
+	<li><a data-cont="Login" title="Login" href="/login/">Log In</a></li>
+	<li><a data-cont="Register" title="Register" href="/register/">Register</a></li>
+	{% endif %}
+	</ul>
+  </div>
+</div>
+</nav>
+</header>
+
+<div class="box">
+<section class="container">
+<div class="content-wrap">
+<div class="content show">
+	<header class="article-header">
+	<h1><a href="#" title="{{blog.title}}" >{{cv.title}}</a></h1>
+		<span class="meta">
+		        <span class="muted">
+				<i class="time-png">
+					<img src="/static/images/time.png">
+				</i>{{cv.pub_date}}
+				</span>
+
+                <span class="muted">
+				<i class="author-png">
+					<img src="/static/images/author.png">
+				</i>{{cv.user}}
+				</span>
+
+				<span class="muted">
+				<i class="view-png">
+					<img src="/static/images/View.png">
+				</i>{{cv.views}}
+			    </span>
+	    </span>
+  </header>
+	<div class="article_center">
+				<h5>{% autoescape off %} {{cv.content}} {% endautoescape %}</h5>
+		        {% if user.is_superuser %}
+				<a href="/admin/blogs/cv/1/change/"><button float="right">Change</button></a>
+		        {% endif %}
+	</div>
+
+
+</div>
+</div>
+
+<aside class="sidebar">
+
+<div class="widget widget_hot">
+	  <h3 style="border: 1px solid #ccc;">Newest Comment Blogs</h3>
+	  <ul class="u">
+
+		  {% for comment_blog in unique_newest_comment_blogs %}
+			<li>
+				<a title="{{comment_blog.post.title}}" href="/blog/{{comment_blog.post.id}}" >
+				<span class="thumbnail">
+				<img class="thumb" data-original="/{{comment_blog.post.cover}}" src="/{{comment_blog.post.cover}}" alt="{{comment_blog.post.title}}"  style="display: block;">
+			    </span>
+				<div class="text_right">
+					<p class="text">{{comment_blog.post.title}}</p>
+
+				<span class="muted">
+					<i class="time-png">
+						<img src="/static/images/time.png">
+					</i>{{comment_blog.post.pub_date}}
+				</span>
+
+				<span class="muted">
+					<i class="eye-open-png">
+						<img src="/static/images/View.png">
+					</i>{{comment_blog.post.views}}
+				</span>
+
+					<span class="muted">
+					<i class="comment-png">
+						<img src="/static/images/comment.png">
+					</i>{{comment_blog.post.comment_set.count}}
+					</span>
+
+				</div>
+				</a>
+			</li>
+		  {% endfor %}
+	  </ul>
+</div>
+
+</aside>
+
+</section>
+
+</div>
+
+
+</body>
+</html>

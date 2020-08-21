@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<style type="text/css">
+	*{
+		padding:0;
+		margin:0;
+	}
+	.containers{
+		min-height: 300px;
+		background-color: #f6f6f6;
+		width: 100%;
+		padding:20px 0;
+		box-sizing: border-box;
+	}
+	.panel
+	{
+		width: 1200px;
+		background: #fff;
+		margin:0 auto;
+		cursor: default;
+		padding: 10px 0;
+		box-sizing: border-box;
+	}
+	.text-center
+	{
+		margin: 0 auto;
+		text-align: center;
+		border-radius: 10px;
+		max-width: 900px;
+		-moz-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+		-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+		box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+	}
+	.float-left
+	{
+		float: left !important;
+	}
+	.float-right
+	{
+		float: right !important;
+	}
+	img
+	{
+		border: 0;
+		vertical-align: bottom;
+	}
+	h2
+	{
+		padding-top: 20px;
+		font-size: 20px;
+	}
+	.padding-big
+	{
+		padding: 20px;
+	}
+	.alert
+	{
+		border-radius: 5px;
+		padding: 15px;
+		border: solid 1px #ddd;
+		background-color: #f5f5f5;
+	}
+	.col-md-offset-4
+	{
+
+		padding: 0 15px;
+		width: 33%;
+		margin:20px auto;
+	}
+	.form-group {
+	    margin-bottom:10px;
+	}
+	.form-control {
+    display: block;
+    width: 100%;
+    height: 43px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15;
+}
+.btn-default{
+	display: inline-block;
+	color: #333;
+	padding: 6px 12px;
+	font-size: 14px;
+	margin-top: 10px;
+	border: 1px solid #efefef;
+	background: #fff;
+	border-radius: 4px;
+}
+	footer{
+		background:#fff;
+		height: 80px;
+		width: 100%;
+		display:flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
+</head>
+
+<header class="header">
+<nav class="navbar navbar-default" id="navbar">
+<div class="container">
+  <div class="collapse navbar-collapse" id="header-navbar">
+
+  <ul class="nav navbar-right">
+     {% if user.is_authenticated %}
+    <li><a data-cont="User" title="User" href="#">Welcome,{{user.username}}</a></li>
+    <li><a data-cont="Logout" title="Logout" href="/logout/">Log Out</a></li>
+    {% else %}
+    <li><a data-cont="Login" title="Login" href="/login/">Log In</a></li>
+    <li><a data-cont="Register" title="Register" href="/register/">Register</a></li>
+    {% endif %}
+  </ul>
+
+	  <ul class="nav navbar-left">
+		  <li><a data-cont="Shukai Blog" title="Shukai Blog" href="/">Main Page</a></li>
+		  <li><a data-cont="List" title="List" href="/blog_list">Blog List Page</a></li>
+	      <li><a data-cont="Personal CV" title="Personal CV" href="/cv/1">Personal CV</a></li>
+	  </ul>
+
+  </div>
+</div>
+</nav>
+</header>
+
+<section class="container">
+<div class="panel">
+<div class="row">
+	<div class="col-md-offset-4">
+	<p>Your Account active fail, Please try it again!</p>
+	</div>
+</div>
+</div>
+</section>
+

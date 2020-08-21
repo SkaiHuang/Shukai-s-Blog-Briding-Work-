@@ -1,0 +1,34 @@
+"""Blog URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path
+
+from blogs.views import index, blog_list, Search, show_blog, CommentBlog, show_cv
+from users.views import Login, Logout, Register, ActiveUser
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', index, name='index'),
+    path('blog_list', blog_list, name='blog_list'),
+    path('search', Search.as_view(), name='search'),
+    path('blog/<int:blog_id>/', show_blog, name='show_blog'),
+    path('comment/<int:blog_id>', CommentBlog.as_view(), name='comment'),
+    path('login/', Login.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('register/', Register.as_view(), name='register'),
+    path('active/<str:active_code>', ActiveUser.as_view(), name='active'),
+    path('cv/<int:cv_id>/', show_cv, name='show_cv'),
+
+]
